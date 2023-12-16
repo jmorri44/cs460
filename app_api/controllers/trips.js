@@ -1,8 +1,34 @@
 const mongoose = require('mongoose');
 const Model = mongoose.model('trips');
+const User = mongoose.model('users');
 
 
 mongoose.set('useFindAndModify', false);
+
+
+const getUser = (req, res, callback) => {
+    if (req.payload && req.payload.email) {           
+      User
+        .findOne({ email : req.payload.email })        
+        .exec((err, user) => {
+          if (!user) {
+            return res
+              .status(404)
+              .json({"message": "User not found"});
+          } else if (err) {
+            console.log(err);
+            return res
+              .status(404)
+              .json(err);
+           }
+          callback(req, res, user.name);               
+         });
+    } else {
+      return res
+        .status(404)
+        .json({"message": "User not found"});
+    }
+  };
 
 //Get a list of all the trips
 
