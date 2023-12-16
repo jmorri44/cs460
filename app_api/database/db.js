@@ -58,4 +58,4 @@ process.on('SIGINT', () => {
 connect(0);
 
 require('./models/travlr');
-require('./models/travlr')
+require('./models/user');
