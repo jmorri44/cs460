@@ -23,15 +23,15 @@ public saveToken(token: string): void {
   this.storage.setItem('travlr-token', token);
 }
 
-//public login(user: User): Promise<any> {
-//  return this.tripDataService.login(user)
-//      .then((authResp: Authresponse) => this.saveToken(authResp.token));
-//}
+public login(user: User): Promise<any> {
+  return this.tripDataService.login(user)
+      .then((authResp: Authresponse) => this.saveToken(authResp.token));
+}
 
-//public register(user: User): Promise<any> {
-//  return this.tripDataService.register(user)
-//.then((authResp: Authresponse) => this.saveToken(authResp.token));
-//}
+public register(user: User): Promise<any> {
+  return this.tripDataService.register(user)
+.then((authResp: Authresponse) => this.saveToken(authResp.token));
+}
 
 public logout(): void {
   this.storage.removeItem('travlr-token');
