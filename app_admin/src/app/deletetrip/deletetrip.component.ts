@@ -17,6 +17,10 @@ export class DeleteTripComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    //do nothing
+  }
+
+  deleteTrip(){
     let tripCode = localStorage.getItem("tripCode");
     if (!tripCode) {
       alert("Something wrong: Cannot locate stashed tripcode");
