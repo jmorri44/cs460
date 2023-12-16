@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Model = mongoose.model('trips');
 
+
+mongoose.set('useFindAndModify', false);
+
 //Get a list of all the trips
 
 const tripsList = async (req, res) => {
@@ -58,15 +61,16 @@ const tripsFindCode = async (req, res) => {
         .exec((err, trip) => {
             if (!trip){
                 return res
-                    .status(404)
+                    .status(403)
                     .json({"message": "trip not found"});                   
             } else if (err) {
                 return res
                     .status(404)
                     .json(err);
             } else {
+                console.log("Found trip " + req.params.tripCode);
                 return res
-                    .status(404)
+                    .status(202)
                     .json(trip);
             }
         });
@@ -83,7 +87,7 @@ const tripsUpdateTrip = async (req, res) => {
             start: req.body.start,
             resort: req.body.resort,
             perPerson: req.body.perPerson,
-            image: req.body.imgae,
+            image: req.body.image,
             description: req.body.description
         }, { new: true})
         .then(trip => {
@@ -109,9 +113,39 @@ const tripsUpdateTrip = async (req, res) => {
         });
 }
 
+const tripsDeleteTrip = async (req, res) => {
+    console.log("deleting trip")
+    console.log(req.body);
+    Model
+        .findOneAndDelete({ 'code': req.params.tripCode },)
+        .then(trip => {
+            if(!trip) {
+                return res
+                    .status(404)
+                    .send({
+                        message: "Trip not found with code " + req.params.tripCode
+                    });
+            }
+            res.send(trip);
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res
+                    .status(404)
+                    .send({
+                        message: "Trip not found with code " + req.params.tripCode
+                    });
+            }
+            return res
+                .status(500) //500 code for server error
+                .json(err);
+        });
+}
+
+
 module.exports = {
     tripsList,
     tripsFindCode,
     tripsAddTrip,
-    tripsUpdateTrip
+    tripsUpdateTrip,
+    tripsDeleteTrip
 }

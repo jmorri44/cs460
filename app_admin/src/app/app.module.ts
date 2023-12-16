@@ -10,6 +10,7 @@ import { AddTripComponent } from './add-trip/add-trip.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-router.module';
 import { EditTripComponent } from './edit-trip/edit-trip.component';
+import { DeleteTripComponent } from './deletetrip/deletetrip.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { EditTripComponent } from './edit-trip/edit-trip.component';
     TripListingComponent,
     TripCardComponent,
     AddTripComponent,
-    EditTripComponent
+    EditTripComponent,
+    DeleteTripComponent
   ],
   imports: [
     BrowserModule,
